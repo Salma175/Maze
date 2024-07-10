@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ec90acf16d881d54cb179bf06e908b76
+guid: f4e1238e509887f459302142426545bf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,10 +113,10 @@ TextureImporter:
       name: Cool_Game_Buttons_0
       rect:
         serializedVersion: 2
-        x: 249
-        y: 3027
-        width: 1751
-        height: 819
+        x: 33
+        y: 367
+        width: 204
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e317a7f8d77ccc4185fb01fa37e29a7
-      internalID: -1868055037
+      spriteID: e83d4e92eba5550428e8bc3dda74a355
+      internalID: 1948999375
       vertices: []
       indices: 
       edges: []
@@ -134,10 +134,10 @@ TextureImporter:
       name: Cool_Game_Buttons_1
       rect:
         serializedVersion: 2
-        x: 2170
-        y: 3032
-        width: 1748
-        height: 763
+        x: 263
+        y: 367
+        width: 203
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b34e79bbc61f73a4dbd59abef9b9fa96
-      internalID: -1970240291
+      spriteID: f6970979010e77e4d888a7037ddcc5c7
+      internalID: 1170583301
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: Cool_Game_Buttons_2
       rect:
         serializedVersion: 2
-        x: 262
-        y: 2117
-        width: 1760
-        height: 733
+        x: 34
+        y: 263
+        width: 203
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02477d5bfdeaa4446975113d3bc76d1c
-      internalID: -1363780590
+      spriteID: 0eee6020de6b6924f88f9fafeadafad5
+      internalID: -963424704
       vertices: []
       indices: 
       edges: []
@@ -176,10 +176,10 @@ TextureImporter:
       name: Cool_Game_Buttons_3
       rect:
         serializedVersion: 2
-        x: 2141
-        y: 2117
-        width: 1780
-        height: 746
+        x: 263
+        y: 262
+        width: 203
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3359ff1ecf83df4469c9b3761d8d4cd5
-      internalID: 975848180
+      spriteID: 4b27a1913c0d1294087b0184bdc14938
+      internalID: -1084163804
       vertices: []
       indices: 
       edges: []
@@ -197,10 +197,10 @@ TextureImporter:
       name: Cool_Game_Buttons_4
       rect:
         serializedVersion: 2
-        x: 246
-        y: 1247
-        width: 1725
-        height: 710
+        x: 33
+        y: 155
+        width: 200
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aec8ffc837a19bf4c999589ace7bdfc1
-      internalID: 1179025953
+      spriteID: 7bea40c3dd720b743a141c6dfbe62639
+      internalID: 2050137254
       vertices: []
       indices: 
       edges: []
@@ -218,10 +218,10 @@ TextureImporter:
       name: Cool_Game_Buttons_5
       rect:
         serializedVersion: 2
-        x: 2186
-        y: 1243
-        width: 1716
-        height: 726
+        x: 265
+        y: 155
+        width: 200
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11217d29b7930ec4599bc157ce731880
-      internalID: -1561913517
+      spriteID: 2625bca376ffe0f4287f58727dd17635
+      internalID: 941721320
       vertices: []
       indices: 
       edges: []
@@ -239,10 +239,10 @@ TextureImporter:
       name: Cool_Game_Buttons_6
       rect:
         serializedVersion: 2
-        x: 230
-        y: 369
-        width: 1854
-        height: 675
+        x: 35
+        y: 47
+        width: 200
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1669d32ed6b82ab4a88a40d82dffe5bb
-      internalID: 554945232
+      spriteID: 67e1fab91b2fbae40a7069ac29027734
+      internalID: 629039573
       vertices: []
       indices: 
       edges: []
@@ -260,10 +260,10 @@ TextureImporter:
       name: Cool_Game_Buttons_7
       rect:
         serializedVersion: 2
-        x: 2083
-        y: 373
-        width: 1790
-        height: 671
+        x: 265
+        y: 49
+        width: 200
+        height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,8 +271,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ce07bae134f03b4d95c113f11a4a003
-      internalID: -81817529
+      spriteID: 9251cbb984e0cdf46b9d6d6f3cef6e36
+      internalID: -1814501760
       vertices: []
       indices: 
       edges: []
@@ -280,7 +280,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 688ae6fe2be920e42888c7e1eea312fa
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -288,14 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cool_Game_Buttons_0: -1868055037
-      Cool_Game_Buttons_1: -1970240291
-      Cool_Game_Buttons_2: -1363780590
-      Cool_Game_Buttons_3: 975848180
-      Cool_Game_Buttons_4: 1179025953
-      Cool_Game_Buttons_5: -1561913517
-      Cool_Game_Buttons_6: 554945232
-      Cool_Game_Buttons_7: -81817529
+      Cool_Game_Buttons_0: 1948999375
+      Cool_Game_Buttons_1: 1170583301
+      Cool_Game_Buttons_2: -963424704
+      Cool_Game_Buttons_3: -1084163804
+      Cool_Game_Buttons_4: 2050137254
+      Cool_Game_Buttons_5: 941721320
+      Cool_Game_Buttons_6: 629039573
+      Cool_Game_Buttons_7: -1814501760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
