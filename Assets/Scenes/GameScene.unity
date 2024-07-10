@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 135945614}
   - component: {fileID: 135945613}
   m_Layer: 0
-  m_Name: Wall2 (1)
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 548205501}
   - component: {fileID: 548205500}
   m_Layer: 0
-  m_Name: Wall4 (1)
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 831771322}
   - component: {fileID: 831771321}
   m_Layer: 0
-  m_Name: Floor (1)
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1162,7 +1162,7 @@ GameObject:
   - component: {fileID: 1082725838}
   - component: {fileID: 1082725837}
   m_Layer: 0
-  m_Name: Wall3 (1)
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6452,7 +6452,7 @@ GameObject:
   - component: {fileID: 1994776309}
   - component: {fileID: 1994776308}
   m_Layer: 0
-  m_Name: Wall1 (1)
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6615,7 +6615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466800, guid: 6414ea9cfa2ccc24a95c775ffa926968, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 219
+      value: 179
       objectReference: {fileID: 0}
     - target: {fileID: 466800, guid: 6414ea9cfa2ccc24a95c775ffa926968, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6623,7 +6623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466800, guid: 6414ea9cfa2ccc24a95c775ffa926968, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -95.1
+      value: -118
       objectReference: {fileID: 0}
     - target: {fileID: 466800, guid: 6414ea9cfa2ccc24a95c775ffa926968, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6664,11 +6664,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 173506978}
   - {fileID: 868862964}
   - {fileID: 828706220}
   - {fileID: 913920413}
   - {fileID: 1487593212}
+  - {fileID: 173506978}
   - {fileID: 2124127700}
   - {fileID: 8443350174218808052}
   - {fileID: 1583122952}
