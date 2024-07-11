@@ -7,4 +7,7 @@ public static class Constants
         Paused,
         GameOver
     }
+
+    public static float GameTime = 10f;
+
 }

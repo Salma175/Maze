@@ -34,4 +34,47 @@ public static class GameEvents
         OnHideGameScreenEvent?.Invoke();
     }
     #endregion
+
+
+    #region Game Pause
+    public static event Action OnPauseEvent;
+
+    public static event Action OnResumeEvent;
+
+    public static void PauseGame()
+    {
+        OnPauseEvent?.Invoke();
+    }
+
+    public static void ResumeGame()
+    {
+        OnResumeEvent?.Invoke();
+    }
+
+    public static event Action OnRestartEvent;
+
+    public static void RestartGame()
+    {
+        OnRestartEvent?.Invoke();
+    }
+
+    #endregion
+
+    #region Level Fail/Success
+
+    public static event Action OnLevelFailEvent;
+
+    public static void LevelFail()
+    {
+        OnLevelFailEvent?.Invoke();
+    }
+
+
+    public static event Action OnLevelCompleteEvent;
+
+    public static void LevelComplete()
+    {
+        OnLevelCompleteEvent?.Invoke();
+    }
+    #endregion
 }

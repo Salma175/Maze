@@ -13,8 +13,6 @@ public class UIMnager : MonoBehaviour
     [SerializeField]
     private GameObject _levelPassScreen;
     [SerializeField]
-    private GameObject _settingsScreen;
-    [SerializeField]
     private GameObject _gameScreen;
 
     private CommandInvoker invoker;
@@ -29,6 +27,10 @@ public class UIMnager : MonoBehaviour
 
         GameEvents.OnShowGameScreenEvent += () => { ShowPanel(_gameScreen); };
         GameEvents.OnHideGameScreenEvent += () => { HidePanel(_gameScreen); };
+
+        GameEvents.OnLevelFailEvent += () => { ShowPanel(_levelFailScreen); };
+
+        GameEvents.OnLevelCompleteEvent += () => { ShowPanel(_levelPassScreen); };
 
         #endregion
     }
@@ -50,12 +52,22 @@ public class UIMnager : MonoBehaviour
 
     public void Home()
     {
+        GameStateManager.Instance.ChangeState(new MainMenuState());
+    }
 
+    public void Pause()
+    {
+        GameEvents.PauseGame();
+    }
+
+    public void Resume()
+    {
+        GameEvents.ResumeGame();
     }
 
     public void Restart()
     {
-
+        GameEvents.RestartGame();
     }
 
     private void ShowPanel(GameObject panel)
@@ -72,7 +84,4 @@ public class UIMnager : MonoBehaviour
         invoker.ExecuteCommand();
     }
 
-    #region Button Listeners
-
-    #endregion
 }

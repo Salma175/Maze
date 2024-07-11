@@ -4,18 +4,71 @@ using UnityEngine;
 public class TimerController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    private float startTime;
+    private float timeRemaining;
+    private bool isRunning = false;
 
     void Start()
     {
-        startTime = Time.time;
+        timeRemaining = Constants.GameTime;
+        isRunning = true;
+
+        GameEvents.OnShowGameScreenEvent += () => { ResetTimer(); };
+
+        GameEvents.OnPauseEvent += () => { StopTimer(); };
+        GameEvents.OnResumeEvent += () => { StartTimer(); };
+        GameEvents.OnRestartEvent += () => { ResetTimer(); };
     }
 
     void Update()
     {
-        float t = Time.time - startTime;
-        string minutes = ((int)t / 60).ToString();
-        string seconds = (t % 60).ToString("f2");
-        timerText.text = minutes + ":" + seconds;
+        if (isRunning)
+        {
+            UpdateTimer();
+        }
+    }
+
+    void UpdateTimer()
+    {
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+
+            // Calculate minutes and seconds
+            int minutes = Mathf.FloorToInt(timeRemaining / 60);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+            // Format and display the time
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        else
+        {
+            // Time has run out
+            timeRemaining = 0;
+            isRunning = false;
+            timerText.text = "00:00";
+            // Call a method to handle the timer reaching zero, if needed
+            OnTimerEnd();
+        }
+    }
+
+    private void StopTimer()
+    {
+        isRunning = false;
+    }
+
+    private void StartTimer()
+    {
+        isRunning = true;
+    }
+
+    public void ResetTimer()
+    {
+        timeRemaining = Constants.GameTime;
+        isRunning = true;
+    }
+
+    private void OnTimerEnd()
+    {
+        GameEvents.LevelFail();
     }
 }
