@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour, ISettingsObserver
 
     private void StopMusic()
     {
-        if(musicSource.isPlaying);
+        if(musicSource.isPlaying)
         {
             musicSource.Stop();
         }

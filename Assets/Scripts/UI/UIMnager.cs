@@ -3,7 +3,11 @@ using UnityEngine;
 public class UIMnager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _background;
+    [SerializeField]
     private GameObject _mainscreen;
+    [SerializeField]
+    private GameObject _infoScreen;
     [SerializeField]
     private GameObject _levelFailScreen;
     [SerializeField]
@@ -11,29 +15,64 @@ public class UIMnager : MonoBehaviour
     [SerializeField]
     private GameObject _settingsScreen;
     [SerializeField]
-    private GameObject _infoScreen;
-    [SerializeField]
     private GameObject _gameScreen;
 
-    void Start()
+    private CommandInvoker invoker;
+
+    void Awake()
     {
-        ResetUi();
+        invoker = new CommandInvoker();
+
+        #region Events
+        GameEvents.OnShowMainMenuEvent += ()=> { ShowPanel(_mainscreen); };
+        GameEvents.OnHideMainMenuEvent += () => { HidePanel(_mainscreen); };
+
+        GameEvents.OnShowGameScreenEvent += () => { ShowPanel(_gameScreen); };
+        GameEvents.OnHideGameScreenEvent += () => { HidePanel(_gameScreen); };
+
+        #endregion
+    }
+
+    public void PlayGame()
+    {
+        GameStateManager.Instance.ChangeState(new PlayingState());
     }
 
     public void ShowInfo()
     {
-        AudioManager.Instance.PlaySFX(AudioClipName.Button);
-        _infoScreen.SetActive(true);
+        ShowPanel(_infoScreen);
     }
 
-    public void HideInfo() 
+    public void HideInfo()
     {
-        AudioManager.Instance.PlaySFX(AudioClipName.Button);
-        _infoScreen.SetActive(false);
+        HidePanel(_infoScreen);
     }
 
-    private void ResetUi()
+    public void Home()
     {
-        _infoScreen.SetActive(false);
+
     }
+
+    public void Restart()
+    {
+
+    }
+
+    private void ShowPanel(GameObject panel)
+    {
+        ICommand showPanelCommand = new ShowPanelCommand(panel);
+        invoker.SetCommand(showPanelCommand);
+        invoker.ExecuteCommand();
+    }
+
+    private void HidePanel(GameObject panel) 
+    {
+        ICommand hidePanelCommand = new HidePanelCommand(panel);
+        invoker.SetCommand(hidePanelCommand);
+        invoker.ExecuteCommand();
+    }
+
+    #region Button Listeners
+
+    #endregion
 }
