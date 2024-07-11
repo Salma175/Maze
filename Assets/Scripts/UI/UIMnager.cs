@@ -3,8 +3,6 @@ using UnityEngine;
 public class UIMnager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _background;
-    [SerializeField]
     private GameObject _mainscreen;
     [SerializeField]
     private GameObject _infoScreen;
@@ -14,6 +12,9 @@ public class UIMnager : MonoBehaviour
     private GameObject _levelPassScreen;
     [SerializeField]
     private GameObject _gameScreen;
+
+    [SerializeField]
+    private GameObject _gamePlayGO;
 
     private CommandInvoker invoker;
 
@@ -25,8 +26,8 @@ public class UIMnager : MonoBehaviour
         GameEvents.OnShowMainMenuEvent += ()=> { ShowPanel(_mainscreen); };
         GameEvents.OnHideMainMenuEvent += () => { HidePanel(_mainscreen); };
 
-        GameEvents.OnShowGameScreenEvent += () => { ShowPanel(_gameScreen); };
-        GameEvents.OnHideGameScreenEvent += () => { HidePanel(_gameScreen); };
+        GameEvents.OnStartGame += StartGame;
+        GameEvents.OnEndGame += EndGame;
 
         GameEvents.OnLevelFailEvent += () => { ShowPanel(_levelFailScreen); };
 
@@ -34,6 +35,25 @@ public class UIMnager : MonoBehaviour
 
         #endregion
     }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnStartGame -= StartGame;
+        GameEvents.OnEndGame -= EndGame;
+    }
+
+    private void StartGame()
+    {
+        ShowPanel(_gameScreen);
+        ShowPanel(_gamePlayGO);
+    }
+
+    private void EndGame()
+    {
+        HidePanel(_gameScreen);
+        HidePanel(_gamePlayGO);
+    }
+
 
     public void PlayGame()
     {

@@ -20,18 +20,18 @@ public static class GameEvents
     #endregion
 
     #region Game Playing State
-    public static event Action OnShowGameScreenEvent;
+    public static event Action OnStartGame;
 
-    public static event Action OnHideGameScreenEvent;
+    public static event Action OnEndGame;
 
     public static void ShowGameScreen()
     {
-        OnShowGameScreenEvent?.Invoke();
+        OnStartGame?.Invoke();
     }
 
     public static void HideGameScreen()
     {
-        OnHideGameScreenEvent?.Invoke();
+        OnEndGame?.Invoke();
     }
     #endregion
 

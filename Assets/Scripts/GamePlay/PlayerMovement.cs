@@ -7,7 +7,32 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-       // rb.maxDepenetrationVelocity = 10;
+
+        GameEvents.OnRestartEvent += ResetBall;
+
+        GameEvents.OnLevelCompleteEvent += ResetBall;
+
+        GameEvents.OnLevelFailEvent += ResetBall;
+
+        GameEvents.OnStartGame += ResetBall;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnRestartEvent -= ResetBall;
+
+        GameEvents.OnLevelCompleteEvent -= ResetBall;
+
+        GameEvents.OnLevelFailEvent -= ResetBall;
+
+        GameEvents.OnStartGame -= ResetBall;
+    }
+
+    private void ResetBall()
+    {
+        // Reset velocity
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     void FixedUpdate()

@@ -1,22 +1,48 @@
 using TMPro;
 using UnityEngine;
 
-public class TimerController : MonoBehaviour
+public class TimerController : MonoBehaviour, IGameDetailsObserver
 {
     public TextMeshProUGUI timerText;
     private float timeRemaining;
     private bool isRunning = false;
 
+    private IGameDataManager _gameDataManager;
+
     void Start()
     {
+        _gameDataManager = ServiceLocator.Get<IGameDataManager>();
+
+        _gameDataManager.RegisterObserver(this);
+
         timeRemaining = Constants.GameTime;
+
         isRunning = true;
 
-        GameEvents.OnShowGameScreenEvent += () => { ResetTimer(); };
+        GameEvents.OnStartGame += ResetTimer;
 
-        GameEvents.OnPauseEvent += () => { StopTimer(); };
-        GameEvents.OnResumeEvent += () => { StartTimer(); };
-        GameEvents.OnRestartEvent += () => { ResetTimer(); };
+        GameEvents.OnLevelCompleteEvent += StopTimer;
+
+        GameEvents.OnPauseEvent += StopTimer;
+
+        GameEvents.OnResumeEvent += StartTimer;
+
+        GameEvents.OnRestartEvent += ResetTimer;
+    }
+
+    private void OnDestroy()
+    {
+        _gameDataManager.UnregisterObserver(this);
+
+        GameEvents.OnStartGame -= ResetTimer;
+
+        GameEvents.OnLevelCompleteEvent -= StopTimer;
+
+        GameEvents.OnPauseEvent -= StopTimer;
+
+        GameEvents.OnResumeEvent -= StartTimer;
+
+        GameEvents.OnRestartEvent -= ResetTimer;
     }
 
     void Update()
@@ -70,5 +96,10 @@ public class TimerController : MonoBehaviour
     private void OnTimerEnd()
     {
         GameEvents.LevelFail();
+    }
+
+    public void OnGameDataChanged(GameDetails newData)
+    {
+        ResetTimer();
     }
 }

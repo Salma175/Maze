@@ -1,15 +1,17 @@
 using UnityEngine;
 
+//Service Locator Pattern
 public class GameInitializer : MonoBehaviour
 {
     void Awake()
     {
-        // Registering game settings manager with the service locator
         ServiceLocator.Register<IGameSettingsManager>(new GameSettingsManager());
+        ServiceLocator.Register<IGameDataManager>(new GameDataManager());
     }
 
     private void OnDestroy()
     {
         ServiceLocator.Unregister<IGameSettingsManager>();
+        ServiceLocator.Unregister<IGameDataManager>();
     }
 }

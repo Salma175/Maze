@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ExitTrigger : MonoBehaviour
 {
@@ -7,8 +6,7 @@ public class ExitTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("You Won");
-            //SceneManager.LoadScene("WinScene");
+            GameEvents.LevelComplete();
         }
     }
 }
