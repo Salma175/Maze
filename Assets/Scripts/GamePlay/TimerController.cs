@@ -1,13 +1,23 @@
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class TimerController : MonoBehaviour, IGameDetailsObserver
 {
-    public TextMeshProUGUI timerText;
+    [SerializeField]
+    private Transform timerTransform;
+    [SerializeField]
+    private TextMeshProUGUI timerText;
+    [SerializeField]
+    private AudioSource heartbeatAudioSource;
+
+    private float heartbeatInterval = 0.5f;
     private float timeRemaining;
     private bool isRunning = false;
+    private bool heartbeatStarted = false;
 
     private IGameDataManager _gameDataManager;
+    private Tween timerTween;
 
     void Start()
     {
@@ -65,6 +75,11 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
 
             // Format and display the time
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            if (timeRemaining <= 10f && !heartbeatStarted)
+            {
+                StartHeartbeat();
+            }
         }
         else
         {
@@ -80,6 +95,8 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
     private void StopTimer()
     {
         isRunning = false;
+
+        StopHeartbeat();
     }
 
     private void StartTimer()
@@ -90,11 +107,16 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
     public void ResetTimer()
     {
         timeRemaining = Constants.GameTime;
+
         isRunning = true;
+
+        StopHeartbeat();
     }
 
     private void OnTimerEnd()
     {
+        StopHeartbeat();
+
         GameEvents.LevelFail();
 
         AudioManager.Instance.PlaySFX(AudioClipName.LevelFail);
@@ -103,5 +125,26 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
     public void OnGameDataChanged(GameDetails newData)
     {
         ResetTimer();
+    }
+
+    private void StartHeartbeat()
+    {
+        heartbeatStarted = true;
+       
+        timerTween = timerTransform.DOScale(1.2f, heartbeatInterval).SetLoops(-1, LoopType.Yoyo);
+      
+        heartbeatAudioSource.Play();
+    }
+
+    private void StopHeartbeat()
+    {
+        heartbeatStarted = false;
+
+        if (timerTween != null && timerTween.IsActive())
+        {
+            timerTween.Kill();
+            timerTransform.localScale = Vector3.one; 
+        }
+        heartbeatAudioSource.Stop();
     }
 }

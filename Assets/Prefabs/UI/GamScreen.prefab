@@ -567,7 +567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62aff55723168c947be7f7c05b2ab109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerTransform: {fileID: 476089626821592759}
   timerText: {fileID: 5108194643128660978}
+  heartbeatAudioSource: {fileID: 0}
 --- !u!1 &5589969273006701032
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public static class Constants
         GameOver
     }
 
-    public static float GameTime = 61f;
+    public static float GameTime = 31f;
 
 
     public static int TotalLevels = 3;
