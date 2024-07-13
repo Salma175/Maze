@@ -14,6 +14,9 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
     private List<GameObject> levelObjects;
 
     [SerializeField]
+    private List<GameObject> collectables;
+
+    [SerializeField]
     private List<Transform> startPositions;
 
     [SerializeField]
@@ -57,13 +60,24 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
     // Method to load a level by name
     public void LoadLevel(int level)
     {
-        levelObjects[level-1].gameObject.SetActive(true);
+        ResetLevel();
 
-        ballTransform.position = startPositions[level-1].position;
+        int index = level - 1;
 
-        exitTransform.position = exitPositions[level-1].position;
+        levelObjects[index].gameObject.SetActive(true);
+
+        collectables[index].gameObject.SetActive(true);
+
+        ballTransform.CopyTransformFrom(startPositions[index]);
+
+        exitTransform.CopyTransformFrom(exitPositions[index]);
 
         _levelText.text = $"Lv:{level}";
+
+        var rb = ballTransform.GetComponent<Rigidbody>();
+
+        rb.constraints = RigidbodyConstraints.None;
+
     }
 
 
@@ -93,6 +107,21 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
 
     private void ResetLevel()
     {
-        LoadLevel(1);
+        foreach (var item in levelObjects)
+        {
+            item.gameObject.SetActive(false);  
+        }
+        foreach (var item in collectables)
+        {
+            item.gameObject.SetActive(false);
+            var coins = item.GetComponentsInChildren<Collectible>();
+            foreach (var collectable in coins)
+            {
+                collectable.ResetUi();
+            }
+        }
+        ballTransform.CopyTransformFrom(startPositions[0]);
+
+        exitTransform.CopyTransformFrom(exitPositions[0]);
     }
 }

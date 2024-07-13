@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed = 20.0f;
+    private float forceMagnitude = 10.0f;
     private Rigidbody rb;
     private void Start()
     {
@@ -35,12 +35,21 @@ public class PlayerMovement : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
     }
 
+  /*  private void OnCollisionEnter(Collision collision)
+    {
+        // Check if the ball has hit a wall
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            AudioManager.Instance.PlaySFX(AudioClipName.Hit);
+        }
+    }*/
+
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        // Create a force vector based on the arrow key inputs
+        Vector3 force = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * forceMagnitude;
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+        // Apply the force to the ball in the direction of the arrow keys
+        rb.AddForce(force);
     }
 }

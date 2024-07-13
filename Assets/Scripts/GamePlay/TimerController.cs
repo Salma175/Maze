@@ -96,6 +96,8 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
     private void OnTimerEnd()
     {
         GameEvents.LevelFail();
+
+        AudioManager.Instance.PlaySFX(AudioClipName.LevelFail);
     }
 
     public void OnGameDataChanged(GameDetails newData)
