@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(Button), typeof(ButtonAnimation))]
 public class ButtonAudioController : MonoBehaviour
 {
     private Button _button;
