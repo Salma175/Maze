@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1758187261c3f5b49b1ac5890780d258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smokePrefab: {fileID: 2252907879302829591, guid: aa48c0b63b3e3c543ac71c59f715cc3a, type: 3}

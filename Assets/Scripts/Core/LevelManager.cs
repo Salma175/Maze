@@ -39,6 +39,8 @@ public class LevelManager : MonoBehaviour, IGameLevelObserver
 
         GameEvents.OnStartGame += LoadDetails;
 
+        GameEvents.OnEndGame += ResetBall;
+
         GameEvents.OnRestartEvent += LoadDetails;
 
         GameEvents.OnLevelCompleteEvent += ResetBall;
@@ -51,6 +53,8 @@ public class LevelManager : MonoBehaviour, IGameLevelObserver
     {
         GameEvents.OnStartGame -= LoadDetails;
 
+        GameEvents.OnEndGame -= ResetBall;
+
         GameEvents.OnLevelCompleteEvent -= ResetBall;
 
         GameEvents.OnRestartEvent -= LoadDetails;
@@ -60,6 +64,8 @@ public class LevelManager : MonoBehaviour, IGameLevelObserver
 
     public void LoadDetails()
     {
+        ResetBall();
+
         GameDetails details = _gameDataManager.GetData();
 
         LoadLevel(details.currentLevel);

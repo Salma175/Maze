@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, IGameLevelObserver
 {
+    public GameObject smokePrefab;
+
     private float forceMagnitude = 10.0f;
     private Rigidbody rb;
     private bool _canMove = true;
     private IGameDataManager _gameDataManager;
 
+   
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,22 +20,26 @@ public class PlayerMovement : MonoBehaviour, IGameLevelObserver
 
         GameEvents.OnStartGame += StartGame;
 
-        GameEvents.OnRestartEvent += StartGame;
+        GameEvents.OnRestartEvent += RestartGame;
 
         GameEvents.OnLevelCompleteEvent += ResetBall;
 
         GameEvents.OnLevelFailEvent += ResetBall;
+
+        GameEvents.OnEndGame += ResetBall;
     }
 
     private void OnDestroy()
     {
-        GameEvents.OnRestartEvent -= StartGame;
+        GameEvents.OnRestartEvent -= RestartGame;
 
         GameEvents.OnLevelCompleteEvent -= ResetBall;
 
         GameEvents.OnLevelFailEvent -= ResetBall;
 
         GameEvents.OnStartGame -= StartGame;
+
+        GameEvents.OnEndGame -= ResetBall;
 
         _gameDataManager.UnregisterObserver(this);
     }
@@ -43,6 +50,12 @@ public class PlayerMovement : MonoBehaviour, IGameLevelObserver
         rb.constraints = RigidbodyConstraints.None;
     }
 
+    private void RestartGame()
+    {
+        ResetBall();
+        StartGame();
+    }
+
     private void ResetBall()
     {
         _canMove = false;
@@ -50,15 +63,18 @@ public class PlayerMovement : MonoBehaviour, IGameLevelObserver
         rb.angularVelocity = Vector3.zero;
     }
 
-    //TODO Smoke Effect
-  /*  private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        // Check if the ball has hit a wall
-        if (collision.gameObject.CompareTag("Wall"))
+        // Check if the collision is with a wall
+        if (collision.gameObject.tag == "Wall")
         {
-            AudioManager.Instance.PlaySFX(AudioClipName.Hit);
+            // Get the point of contact
+            Vector3 contactPoint = collision.contacts[0].point;
+
+            // Instantiate the smoke effect at the contact point
+            Instantiate(smokePrefab, contactPoint, Quaternion.identity);
         }
-    }*/
+    }
 
     void FixedUpdate()
     {
