@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button), typeof(ButtonAnimation))]
-public class ButtonAudioController : MonoBehaviour
+public class ButtonAudioController : MonoBehaviour, IPointerEnterHandler
 {
     private Button _button;
     private void Awake()
@@ -23,5 +24,10 @@ public class ButtonAudioController : MonoBehaviour
     private void OnButtonClick()
     {
         AudioManager.Instance.PlaySFX(AudioClipName.Button);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        AudioManager.Instance.PlaySFX(AudioClipName.Hover);
     }
 }

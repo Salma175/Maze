@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
-public class TimerController : MonoBehaviour, IGameDetailsObserver
+public class TimerController : MonoBehaviour, IGameLevelObserver
 {
     [SerializeField]
     private Transform timerTransform;
@@ -19,13 +20,14 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
     private IGameDataManager _gameDataManager;
     private Tween timerTween;
 
+    private List<float> timerList = new List<float>() {31f, 46f, 61f };
     void Start()
     {
         _gameDataManager = ServiceLocator.Get<IGameDataManager>();
 
         _gameDataManager.RegisterObserver(this);
 
-        timeRemaining = Constants.GameTime;
+        timeRemaining = timerList[_gameDataManager.GetData().currentLevel-1];
 
         isRunning = true;
 
@@ -106,7 +108,9 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
 
     public void ResetTimer()
     {
-        timeRemaining = Constants.GameTime;
+        int index = _gameDataManager.GetData().currentLevel-1;
+
+        timeRemaining = timerList[index];
 
         isRunning = true;
 
@@ -120,11 +124,6 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
         GameEvents.LevelFail();
 
         AudioManager.Instance.PlaySFX(AudioClipName.LevelFail);
-    }
-
-    public void OnGameDataChanged(GameDetails newData)
-    {
-        ResetTimer();
     }
 
     private void StartHeartbeat()
@@ -146,5 +145,10 @@ public class TimerController : MonoBehaviour, IGameDetailsObserver
             timerTransform.localScale = Vector3.one; 
         }
         heartbeatAudioSource.Stop();
+    }
+
+    public void OnGameLevelChanged(int level)
+    {
+        ResetTimer();
     }
 }

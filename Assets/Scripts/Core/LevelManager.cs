@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour, IGameDetailsObserver
+public class LevelManager : MonoBehaviour, IGameLevelObserver
 {
     [SerializeField]
     private GameObject _noMoreLevelsGO;
@@ -36,7 +37,11 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
 
         _gameDataManager.RegisterObserver(this);
 
+        GameEvents.OnStartGame += LoadDetails;
+
         GameEvents.OnRestartEvent += LoadDetails;
+
+        GameEvents.OnLevelCompleteEvent += ResetBall;
 
         ResetLevel();
 
@@ -44,6 +49,10 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
     }
     void OnDestroy()
     {
+        GameEvents.OnStartGame -= LoadDetails;
+
+        GameEvents.OnLevelCompleteEvent -= ResetBall;
+
         GameEvents.OnRestartEvent -= LoadDetails;
 
         _gameDataManager.UnregisterObserver(this);
@@ -56,6 +65,12 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
         LoadLevel(details.currentLevel);
     }
 
+    private void ResetBall()
+    {
+        int index = _gameDataManager.GetData().currentLevel - 1;
+
+        ballTransform.CopyTransformFrom(startPositions[index]);
+    }
 
     // Method to load a level by name
     public void LoadLevel(int level)
@@ -72,12 +87,7 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
 
         exitTransform.CopyTransformFrom(exitPositions[index]);
 
-        _levelText.text = $"Lv:{level}";
-
-        var rb = ballTransform.GetComponent<Rigidbody>();
-
-        rb.constraints = RigidbodyConstraints.None;
-
+        _levelText.text = $"Lv: {level}";
     }
 
 
@@ -96,13 +106,15 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
         {
             _gameDataManager.SaveCurrentLevel(1);
 
+            _gameDataManager.SaveCurrentScore(0);
+
             _noMoreLevelsGO.SetActive(true);        
         }
     }
 
-    public void OnGameDataChanged(GameDetails newData)
+    public void OnGameLevelChanged(int level)
     {
-        LoadLevel(newData.currentLevel);
+        LoadLevel(level);
     }
 
     private void ResetLevel()
@@ -114,11 +126,6 @@ public class LevelManager : MonoBehaviour, IGameDetailsObserver
         foreach (var item in collectables)
         {
             item.gameObject.SetActive(false);
-            var coins = item.GetComponentsInChildren<Collectible>();
-            foreach (var collectable in coins)
-            {
-                collectable.ResetUi();
-            }
         }
         ballTransform.CopyTransformFrom(startPositions[0]);
 

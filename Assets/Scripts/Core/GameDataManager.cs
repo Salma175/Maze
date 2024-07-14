@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +6,24 @@ public class GameDetails
 {
     public int currentLevel;
     public int totalLevels;
+    public int score;
 
-    public GameDetails(int currentLevel, int totalLevels)
+    public GameDetails(int currentLevel, int totalLevels, int score)
     {
         this.currentLevel = currentLevel;
         this.totalLevels = totalLevels;
+        this.score = score;
     }
 }
 
-public interface IGameDetailsObserver
+public interface IGameLevelObserver
 {
-    void OnGameDataChanged(GameDetails newData);
+    void OnGameLevelChanged(int level);
+}
+
+public interface IGameScoreObserver
+{
+    void OnGameScoreChanged(int score);
 }
 
 public interface IGameDataManager
@@ -25,14 +31,20 @@ public interface IGameDataManager
     GameDetails GetData();
     void SaveCurrentLevel(int level);
 
-    void RegisterObserver(IGameDetailsObserver observer);
-    void UnregisterObserver(IGameDetailsObserver observer);
+    void RegisterObserver(IGameLevelObserver observer);
+    void UnregisterObserver(IGameLevelObserver observer);
+
+    void SaveCurrentScore(int score);
+
+    void RegisterObserver(IGameScoreObserver observer);
+    void UnregisterObserver(IGameScoreObserver observer);
 }
 
 public class GameDataManager : IGameDataManager
 {
     private const string GameDetails = "GameDetails";
-    private List<IGameDetailsObserver> observers = new List<IGameDetailsObserver>();
+    private List<IGameLevelObserver> levelObservers = new List<IGameLevelObserver>();
+    private List<IGameScoreObserver> scoreObservers = new List<IGameScoreObserver>();
 
     public GameDetails GetData()
     {
@@ -42,7 +54,7 @@ public class GameDataManager : IGameDataManager
 
             return JsonUtility.FromJson<GameDetails>(json);
         }
-        return new GameDetails(1,Constants.TotalLevels);
+        return new GameDetails(1,Constants.TotalLevels,0);
     }
 
     public void SaveCurrentLevel(int level)
@@ -56,24 +68,55 @@ public class GameDataManager : IGameDataManager
 
         PlayerPrefs.Save();
 
-        NotifyObservers(details);
+        NotifyLevelObservers(level);
     }
 
-    public void RegisterObserver(IGameDetailsObserver observer)
+    public void RegisterObserver(IGameLevelObserver observer)
     {
-        observers.Add(observer);
+        levelObservers.Add(observer);
     }
 
-    public void UnregisterObserver(IGameDetailsObserver observer)
+    public void UnregisterObserver(IGameLevelObserver observer)
     {
-        observers.Remove(observer);
+        levelObservers.Remove(observer);
     }
 
-    private void NotifyObservers(GameDetails newDetails)
+    private void NotifyLevelObservers(int level)
     {
-        foreach (var observer in observers)
+        foreach (var observer in levelObservers)
         {
-            observer.OnGameDataChanged(newDetails);
+            observer.OnGameLevelChanged(level);
         }
+    }
+
+    public void SaveCurrentScore(int score)
+    {
+        var details = GetData();
+
+        details.score = score;
+
+        string json = JsonUtility.ToJson(details);
+
+        PlayerPrefs.SetString(GameDetails, json);
+
+        PlayerPrefs.Save();
+
+        NotifyScoreObservers(score);
+    }
+    private void NotifyScoreObservers(int score)
+    {
+        foreach (var observer in scoreObservers)
+        {
+            observer.OnGameScoreChanged(score);
+        }
+    }
+    public void RegisterObserver(IGameScoreObserver observer)
+    {
+        scoreObservers.Add(observer);
+    }
+
+    public void UnregisterObserver(IGameScoreObserver observer)
+    {
+        scoreObservers.Remove(observer);
     }
 }

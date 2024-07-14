@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIMnager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _mainscreen;
@@ -23,25 +23,39 @@ public class UIMnager : MonoBehaviour
         invoker = new CommandInvoker();
 
         #region Events
-        GameEvents.OnShowMainMenuEvent += ()=> { ShowPanel(_mainscreen); };
+        GameEvents.OnShowMainMenuEvent += MainMenu;
         GameEvents.OnHideMainMenuEvent += () => { HidePanel(_mainscreen); };
 
         GameEvents.OnStartGame += StartGame;
         GameEvents.OnEndGame += EndGame;
 
-        GameEvents.OnLevelFailEvent += () => { ShowPanel(_levelFailScreen); };
+        GameEvents.OnLevelFailEvent += LevelFail;
 
-        GameEvents.OnLevelCompleteEvent += () => { ShowPanel(_levelPassScreen); };
+        GameEvents.OnLevelCompleteEvent += LevelPass;
 
         #endregion
     }
 
     private void OnDestroy()
     {
+        GameEvents.OnShowMainMenuEvent -= MainMenu;
         GameEvents.OnStartGame -= StartGame;
         GameEvents.OnEndGame -= EndGame;
+        GameEvents.OnLevelCompleteEvent -= LevelPass;
+        GameEvents.OnLevelFailEvent -= LevelFail;
     }
-
+    private void MainMenu()
+    {
+        ShowPanel(_mainscreen);
+    }
+    private void LevelPass()
+    {
+        ShowPanel(_levelPassScreen);
+    }
+    private void LevelFail()
+    {
+        ShowPanel(_levelFailScreen);
+    }
     private void StartGame()
     {
         ShowPanel(_gameScreen);

@@ -2,12 +2,15 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Collectible : MonoBehaviour
+public class Collectible : MonoBehaviour, IGameLevelObserver
 {
     public GameObject iconPrefab; // Assign the IconImage prefab in the Inspector
     private Vector3 originalPosition;
     private float fadeDuration = 0.3f;
     private Canvas uiCanvas;
+
+    private IGameDataManager _gameDataManager;
+
     void Start()
     {
         // Find the Canvas at runtime
@@ -15,8 +18,26 @@ public class Collectible : MonoBehaviour
 
         originalPosition = transform.position;
 
+        GameEvents.OnStartGame += OnRestartEvent;
+
+        GameEvents.OnRestartEvent += OnRestartEvent;
+
+        _gameDataManager = ServiceLocator.Get<IGameDataManager>();
+
+        _gameDataManager.RegisterObserver(this);
+
     }
-    internal void ResetUi()
+
+    private void OnDestroy()
+    {
+        GameEvents.OnStartGame -= OnRestartEvent;
+
+        GameEvents.OnRestartEvent -= OnRestartEvent;
+
+        _gameDataManager.UnregisterObserver(this);
+    }
+
+    private void OnRestartEvent()
     {
         gameObject.SetActive(true);
     }
@@ -26,8 +47,14 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             AudioManager.Instance.PlaySFX(AudioClipName.Coin);
+
             Collected();
+
             gameObject.SetActive(false);
+
+            int score = _gameDataManager.GetData().score+1;
+
+            _gameDataManager.SaveCurrentScore(score);
         }
     }
 
@@ -52,5 +79,10 @@ public class Collectible : MonoBehaviour
 
         // Optional: Destroy the object after the animation completes
         sequence.OnComplete(() => Destroy(icon));
+    }
+
+    public void OnGameLevelChanged(int level)
+    {
+        gameObject.SetActive(true);
     }
 }

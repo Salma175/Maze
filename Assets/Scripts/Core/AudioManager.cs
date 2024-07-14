@@ -8,7 +8,8 @@ public enum AudioClipName
     LevelFail,
     LevelSuccess,
     Coin,
-    Hit
+    Hit,
+    Hover
 }
 
 [Serializable]
